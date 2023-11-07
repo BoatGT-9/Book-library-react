@@ -4,9 +4,9 @@ import React, { useState } from "react";
 const Footer = () => {
   const [click, setClick] = useState("");
 
-  const Onclick = () => {
-    click("Click Success");
-  };
+  // const onClick = () => {
+  //   click("Click Success");
+  // };
   return (
     <footer>
       <div className="container">
@@ -18,7 +18,7 @@ const Footer = () => {
 
             <a href="https://www.facebook.com/surapong.kaeynin.s.r.p/">
               <img
-                onclick={Onclick}
+                // onclick={onClick}
                 src="src/assets/icon/facebook .png"
                 alt=""
                 width={"40px"}
@@ -26,7 +26,7 @@ const Footer = () => {
             </a>
             <a href="https://www.instagram.com/boat_s.r.p/">
               <img
-                onclick={Onclick}
+                // onclick={onClick}
                 src="src/assets/icon/instagram .png"
                 alt=""
                 width={"40px"}
@@ -34,7 +34,9 @@ const Footer = () => {
             </a>
 
             <a href="https://twitter.com/KUNG_69DOG">
-              <img onclick={Onclick} src="src/assets/icon/twitter.png" alt="" width={"40px"} />
+              <img 
+              // onclick={onClick} 
+              src="src/assets/icon/twitter.png" alt="" width={"40px"} />
             </a>
             
           </div>

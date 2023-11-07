@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 //import Avatar from '@mui/material/Avatar';
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -8,15 +8,13 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import { ThemeProvider, } from "@mui/material/styles";
-import { useNavigate } from "react-router-dom";
+import { ThemeProvider } from "@mui/material/styles";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import axios from "../api/axios";
 import SendIcon from "@mui/icons-material/Send";
-import CloseIcon from '@mui/icons-material/Close';
-
-// import { makeStyles } from '@mui/styles';
-
-
+import CloseIcon from "@mui/icons-material/Close";
+import { styled } from "@mui/material/styles";
+import { red } from "@mui/material/colors";
 import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
@@ -36,8 +34,6 @@ const theme = createTheme({
   },
 });
 
-
-
 function Copyright(props) {
   return (
     <Typography
@@ -45,7 +41,7 @@ function Copyright(props) {
       color="text.secondary"
       align="center"
       {...props}
-      >
+    >
       {"Copyright © "}
       <Link color="inherit" href="https://arit.npru.ac.th/">
         Web Books NPRU
@@ -57,40 +53,50 @@ function Copyright(props) {
 }
 
 // TODO remove, this demo shouldn't need to reset the theme.
+// เปลี่ยนสีของปุ่ม Button cancel
+const ColorButton = styled(Button)(({ theme }) => ({
+  color: theme.palette.getContrastText(red[500]),
+  backgroundColor: red[500],
+  "&:hover": {
+    backgroundColor: red[700],
+  },
+}));
 
-// const Add = () => {};
-// const useStyles = makeStyles((theme) => ({
-//   customButton: {
-//     backgroundColor: 'red', // สีพื้นหลังเริ่มต้น
-//     color: 'black',          // สีตัวอักษรเริ่มต้น
-//     marginTop: '5px',
-//     '&:hover': {
-//       backgroundColor: 'blue', // สีพื้นหลังเมื่อโฮเวอร์
-//     },
-//   },
-// }));
-
-
-export default function Add() {
-  
+export default function Edit() {
+  const navigate = useNavigate();
+  const [error, setError] = useState([false]);
   const [books, setBooks] = useState({
     name: "",
     type: "",
     title: "",
-    image: "",
     publisher: "",
+    image: "",
   });
-  const navigate = useNavigate();
-  const [error, setError] = useState(false);
-
+  //   console.log(books);
+  const { bookId } = useParams();
+  console.log(bookId);
   const handleChange = (e) => {
-    setBooks((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setBooks((Prev) => ({ ...Prev, [e.target.name]: e.target.value }));
   };
+  useEffect(() => {
+    const fetchAllBooks = async () => {
+      try {
+        const res = await axios.get(`/book/${bookId}`);
+        // console.log(res);
+        setBooks(res.data.Books);
+        // console.log(res.data.BookList);
+        console.log(books);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchAllBooks();
+  }, [bookId]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(books);
     try {
-      await axios.post(`/book`, books);
+      await axios.put(`/book/${bookId}`, books);
       navigate("/");
     } catch (error) {
       console.error(error);
@@ -98,18 +104,19 @@ export default function Add() {
     }
   };
   const handleClear = () => {
-    setBooks({
+    setRestaurant({
       name: "",
       type: "",
       title: "",
-      image: "",
       publisher: "",
+      image: "",
     });
     setError(false);
   };
-  const handleCancel = () =>{
-    navigate("/")
-  }
+  const handleCancel = () => {
+    navigate("/");
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: "100vh" }}>
@@ -121,8 +128,8 @@ export default function Add() {
           md={7}
           sx={{
             backgroundImage:
-              "url(https://normcph.com/wp-content/uploads/2022/09/NormArchitects_SoftMinimal_Gestalten_PhotoCredits_ChristianM%C3%B8llerAndersen_Lowres_29.jpg)",
-              // https://source.unsplash.com/random?wallpapers
+              "url(https://normcph.com/wp-content/uploads/2022/09/NormArchitects_SoftMinimal_Gestalten_PhotoCredits_ChristianM%C3%B8llerAndersen_Lowres_46.jpg)",
+            // https://source.unsplash.com/random?wallpapers
             backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
               t.palette.mode === "light"
@@ -143,7 +150,7 @@ export default function Add() {
             }}
           >
             <Typography component="h1" variant="h5" marginTop={3}>
-              Add new Books
+              Edit Book
             </Typography>
             <Box
               component="form"
@@ -160,7 +167,7 @@ export default function Add() {
                 name="name"
                 autoComplete="name"
                 onChange={handleChange}
-                // value={books.name}
+                value={books.name}
                 autoFocus
               />
               <TextField
@@ -172,6 +179,7 @@ export default function Add() {
                 type="text"
                 id="type"
                 onChange={handleChange}
+                value={books.type}
                 autoComplete="current-password"
               />
               <TextField
@@ -183,6 +191,7 @@ export default function Add() {
                 type="text"
                 id="title"
                 onChange={handleChange}
+                value={books.title}
                 autoComplete="current-password"
               />
               <TextField
@@ -194,6 +203,7 @@ export default function Add() {
                 type="text"
                 id="publisher"
                 onChange={handleChange}
+                value={books.publisher}
                 autoComplete="current-password"
               />
               <TextField
@@ -205,32 +215,59 @@ export default function Add() {
                 type="text"
                 id="Image"
                 onChange={handleChange}
+                value={books.image}
                 autoComplete="current-password"
               />
 
-             
-              <Button 
-              onClick={handleSubmit}
-               endIcon={<SendIcon />} 
-               fullWidth 
-               variant="contained"
-                
-               >
-                Add book 
-              </Button>
-              
-              <Button
+              {/* <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2, backgroundColor: "#594035", }}
+              >
+                Add book
+              </Button> */}
+              {/* <Button 
               variant="contained"
+              onClick={handleSubmit}
+              fullWidth
+              sx={{backgroundColor:"#594035" }}
+              >
+                Contained
+                </Button> */}
+              <Button
+                variant="contained"
+                // color="brown"
+                endIcon={<SendIcon />}
+                fullWidth
+                
+                onClick={handleSubmit}
+              >
+                Edit
+              </Button>
+              {/* <Button
+              variant="outlined"
               color="error"
               onClick={handleCancel}
                endIcon={<CloseIcon />} 
                fullWidth 
-               sx={{marginTop:'5px' }}
-               
+
+               sx={{backgroundColor:'red',color:'black', marginTop:'5px' }}
+               //  className={classes.customButton}
                >
                 Cancel
-              </Button>
-                 
+              </Button> */}
+
+              <ColorButton
+                variant="contained"
+                color="error"
+                onClick={handleCancel}
+                endIcon={<CloseIcon />}
+                fullWidth
+                sx={{ marginTop: "5px" }}
+              >
+                cancel
+              </ColorButton>
               {/* <Copyright sx={{ mt: 5 }} /> */}
             </Box>
           </Box>

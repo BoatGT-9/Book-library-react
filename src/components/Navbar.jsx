@@ -12,8 +12,9 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { Link } from "react-router-dom";
+import { Stack } from "@mui/material";
 
-const pages = ["Book", "Add"];
+const pages = ["Add"];
 const settings = ["Profile", "Logout"];
 
 function ResponsiveAppBar() {
@@ -38,8 +39,8 @@ function ResponsiveAppBar() {
   return (
     <AppBar
       className="Bar"
-      position="static"
-      sx={{ backgroundColor: "#594035"}}
+      position="fixed"
+      sx={{ backgroundColor: "#594035" }}
     >
       <Container maxWidth="auto">
         <Toolbar disableGutters>
@@ -91,12 +92,12 @@ function ResponsiveAppBar() {
               onClose={handleCloseNavMenu}
               sx={{
                 display: { xs: "block", md: "none" },
-                color:"black",
+                color: "black",
               }}
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Link className="navbar-brand2" to={`/${page.toLowerCase()}`}> 
+                  <Link className="navbar-brand2" to={`/${page.toLowerCase()}`}>
                     <Typography textAlign="center">{page}</Typography>
                   </Link>
                 </MenuItem>
@@ -130,14 +131,19 @@ function ResponsiveAppBar() {
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "black", display: "block" }}
               >
-                <Link className="navbar-brand" to={`/${page.toLowerCase()}`}> 
+                <Link className="navbar-brand" to={`/${page.toLowerCase()}`}>
                   <Typography textAlign="center">{page}</Typography>
-                </Link> 
+                </Link>
               </Button>
             ))}
           </Box>
-
-          
+          <Stack>
+            <Link to={"/login"}>
+            <Button variant="text" sx={{ color: "#ffff" , size:"30px" }}>
+              Login
+            </Button>
+            </Link>
+          </Stack>
         </Toolbar>
       </Container>
     </AppBar>
