@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
-//import Avatar from '@mui/material/Avatar';
+import { Navigate, useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+
+// MUI framework
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -9,13 +12,22 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { ThemeProvider } from "@mui/material/styles";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
-import axios from "../api/axios";
 import SendIcon from "@mui/icons-material/Send";
 import CloseIcon from "@mui/icons-material/Close";
 import { styled } from "@mui/material/styles";
 import { red } from "@mui/material/colors";
 import { createTheme } from '@mui/material/styles';
+
+
+const URL = import.meta.env.VITE_BASE_URL;
+const USERNAME = import.meta.env.VITE_BASE_USERNAME;
+const PASSWORD = import.meta.env.VITE_BASE_PASSWORD;
+const config = {
+  auth: {
+    username: USERNAME,
+    password: PASSWORD,
+  },
+};
 
 const theme = createTheme({
   palette: {
@@ -81,7 +93,7 @@ export default function Edit() {
   useEffect(() => {
     const fetchAllBooks = async () => {
       try {
-        const res = await axios.get(`/book/${bookId}`);
+        const res = await axios.get(`/books/${bookId}`);
         // console.log(res);
         setBooks(res.data.Books);
         // console.log(res.data.BookList);
@@ -96,7 +108,7 @@ export default function Edit() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`/book/${bookId}`, books);
+      await axios.put(`/books/${bookId}`, books,config);
       navigate("/");
     } catch (error) {
       console.error(error);

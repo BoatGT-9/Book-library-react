@@ -1,5 +1,8 @@
 import { useState } from "react";
-//import Avatar from '@mui/material/Avatar';
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+// MUI framework
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -9,15 +12,10 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import { ThemeProvider, } from "@mui/material/styles";
-import { useNavigate } from "react-router-dom";
-import axios from "../api/axios";
 import SendIcon from "@mui/icons-material/Send";
 import CloseIcon from '@mui/icons-material/Close';
-
-// import { makeStyles } from '@mui/styles';
-
-
 import { createTheme } from '@mui/material/styles';
+
 
 const theme = createTheme({
   palette: {
@@ -36,6 +34,15 @@ const theme = createTheme({
   },
 });
 
+const URL = import.meta.env.VITE_BASE_URL;
+const USERNAME = import.meta.env.VITE_BASE_USERNAME;
+const PASSWORD = import.meta.env.VITE_BASE_PASSWORD;
+const config = {
+  auth: {
+    username: USERNAME,
+    password: PASSWORD,
+  },
+};
 
 
 function Copyright(props) {
@@ -90,7 +97,7 @@ export default function Add() {
     e.preventDefault();
     console.log(books);
     try {
-      await axios.post(`/book`, books);
+      await axios.post(`${URL}/books`, books,config);
       navigate("/");
     } catch (error) {
       console.error(error);

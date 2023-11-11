@@ -1,7 +1,11 @@
 import axios from "axios";
 
 const instance  = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "https://extinct-ruby-cap.cyclic.app",
+  auth: {
+    username: "Admin",
+    password: "admin12345",
+  }
 });
 
 export default  instance ;

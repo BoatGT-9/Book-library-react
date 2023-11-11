@@ -36,6 +36,9 @@ function ResponsiveAppBar() {
     setAnchorElUser(null);
   };
 
+  // const { user } = useAuthContext();
+
+
   return (
     <AppBar
       className="Bar"
@@ -140,7 +143,7 @@ function ResponsiveAppBar() {
           <Stack>
             <Link to={"/login"}>
             <Button variant="text" sx={{ color: "#ffff" , size:"30px" }}>
-              Login
+              log in 
             </Button>
             </Link>
           </Stack>

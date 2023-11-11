@@ -1,4 +1,4 @@
-import { useState } from "react";
+// import { useState } from "react";
 import "./App.css";
 import Book from "./page/Books";
 import Add from "./page/Add";
@@ -6,6 +6,7 @@ import { Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import  Edit  from "./page/Edit.jsx";
 import Login from "./page/Login.jsx";
+import Register from "./page/Register.jsx"
 // import Card from "./components/Card";
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/Add" element={<Add/>}/>
           <Route path="/edit/:bookId" element={<Edit/>}/>
           <Route path="/login" element={<Login/>}/>
+          <Route path="/Register" element={<Register/>}/>
         </Route>
       </Routes>
       

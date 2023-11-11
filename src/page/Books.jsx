@@ -1,21 +1,26 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Card from "../components/Card";
+import Swal from "sweetalert2";
+
+// MUI framework
 import { styled, alpha, ThemeProvider } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import { createTheme } from "@mui/material/styles";
-import axios from "../api/axios";
-import Card from "../components/Card";
 import { Box, Stack } from "@mui/material";
-import Swal from "sweetalert2";
-// const URL = "http://localhost:5000"
-// const URL = import.meta.VITE_BASE_URL
+
+// config .env
+const URL = import.meta.env.VITE_BASE_URL;
+const USERNAME = import.meta.env.VITE_BASE_USERNAME;
+const PASSWORD = import.meta.env.VITE_BASE_PASSWORD;
 const config = {
-  // auth: {
-  //   username: USERNAME,
-  //   password: PASSWORD,
-  // },
-  // headers:authHeader(),
+  auth: {
+    username: USERNAME,
+    password: PASSWORD,
+  },
 };
+
 
 const theme = createTheme();
 
@@ -76,7 +81,8 @@ const handleDelete = async (id) => {
   }).then(async (result) => {
     if (result.isConfirmed) {
       try {
-        await axios.delete(`/book/${id}`);
+        
+        await axios.delete(`${URL}/books/${id}`);
 
         await Swal.fire("Deleted!", "Your file has been deleted.", "success");
         // สั่งรีโหลดหน้าของ page  เพื่อจะให้ useEfect ทำงานอีกครั้ง
@@ -89,14 +95,15 @@ const handleDelete = async (id) => {
 };
 const Books = () => {
   const [books, setBooks] = useState([]);
-
+  // const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const fetchAllRes = async () => {
       try {
         // console.log(data)
-        const res = await axios.get(`/book`);
+        const res = await axios.get(`${URL}/books`,config);
         setBooks(res.data.BookList);
-        console.log(res.data, booklist);
+        // setIsLoading(false);
+        // console.log(res.data, booklist);
       } catch (err) {
         console.log(err);
       }
@@ -118,6 +125,7 @@ const Books = () => {
           />
         </Search>
       </div>
+      {/* {!isLoading?( */}
       <Box xs={12} sm={6} md={4}>
         <Stack
           xs={12}
@@ -143,6 +151,7 @@ const Books = () => {
       </div> */}
       </Stack>
        </Box>
+      {/* ):(<Loading animation={Loading}/>)} */}
       
         
    

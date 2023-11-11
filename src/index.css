@@ -16,18 +16,18 @@ h1{
 /* .content {
     flex: ;
 } */
-.icon-container {
+/* .icon-container {
     
-    text-align: center; /* จัดให้ไอคอนตรงกลาง */
-}
-.icon-container img{ 
+    text-align: center;  จัดให้ไอคอนตรงกลาง 
+}*/
+/* .icon-container img{ 
     color : "#000";
     margin: 10px;
-    /* box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); เพิ่มเงา */
-}
-.icon-container img :hover{
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); เพิ่มเงา
+} */
+/* .icon-container img :hover{
     transform: scale(1.2) translateY(-10px);
-}
+} */
 .search-bar {
     display: flex;
     justify-content: center;
