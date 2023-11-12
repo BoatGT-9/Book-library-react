@@ -1,5 +1,6 @@
-import * as React from 'react';
-import {Link} from 'react-router-dom';
+import { useState } from 'react';
+import {Link , useNavigate } from 'react-router-dom';
+import authService from '../service/auth.service';
 
 // MUI framework
 import Button from '@mui/material/Button';
@@ -29,31 +30,46 @@ const theme = createTheme({
   },
 });
 
-// function Copyright(props) {
-//   return (
-//     <Typography variant="body2" color="text.secondary" align="center" {...props}>
-//       {'Copyright © '}
-//       <Link color="inherit" href="https://mui.com/">
-//         Your Website
-//       </Link>{' '}
-//       {new Date().getFullYear()}
-//       {'.'}
-//     </Typography>
-//   );
-// }
 
-// TODO remove, this demo shouldn't need to reset the theme.
 
-// const defaultTheme = createTheme();
+const SignUp = () => {
 
-export default function SignUp( ) {
-  const handleSubmit = (event) => {
+  const navigate = useNavigate();
+
+  const [username, setusername] = useState({
+    username: "",
+    email: "",
+    password: "",
+    
+  });
+  const [errors, setError] = useState({});
+  
+  const Input = (event) => {
+    setusername((Prev) => ({
+      ...Prev,
+      [event.target.name]: [event.target.value],
+    }));
+  };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    try {
+      // console.log(username.password)
+      if (username.Confirm_password === username.Password) {
+        const register = await authService.register(
+          username.username,
+          username.email,
+          username.password
+        );
+      } else {
+        setError(ture), 
+        Seterrormessage({ message: "มันซ้ำกันอะ" });
+      }
+    } catch (error) {
+      console.log(error);
+      setError(error);
+      
+    }
   };
 
   return (
@@ -81,6 +97,8 @@ export default function SignUp( ) {
                   id="username"
                   label="User name"
                   name="username"
+                  onChange={Input}
+                  value={username.username}
                   autoComplete="email"
                 />
               </Grid>
@@ -91,6 +109,8 @@ export default function SignUp( ) {
                   id="email"
                   label="Email Address"
                   name="email"
+                  onChange={Input}
+                  value={username.email}
                   autoComplete="email"
                 />
               </Grid>
@@ -98,6 +118,8 @@ export default function SignUp( ) {
                 <TextField
                   required
                   fullWidth
+                  onChange={Input}
+                  value={username.password}
                   name="password"
                   label="Password"
                   type="password"
@@ -123,7 +145,7 @@ export default function SignUp( ) {
             <Grid container justifyContent="flex-end">
               <Grid item sm={10}>
               Already have an account?
-                <Link to="/Login" variant="body2" spacing={6}>
+                <Link to="/Login" variant="body2" spacing={6} style={{color:"#594035"}}>
                    Sign in
                 </Link>
               </Grid>
@@ -135,3 +157,5 @@ export default function SignUp( ) {
     </ThemeProvider>
   );
 }
+
+export default SignUp;

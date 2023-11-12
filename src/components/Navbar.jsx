@@ -7,15 +7,23 @@ import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
+// import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
+// import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import { Link } from "react-router-dom";
+import { Link,useNavigate  } from "react-router-dom";
 import { Stack } from "@mui/material";
+import useAuthContext from "../context/Authcontext"
+// import { useNavigate } from "react-router-dom";
 
 const pages = ["Add"];
-const settings = ["Profile", "Logout"];
+// const settings = ["Profile", "Logout"];
+const {user, logout} = useAuthContext;
+// const navigate = useNavigate();
+//   const handleLogout = () =>{
+//     logout();
+//     navigate("/login");
+//   }
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -24,17 +32,13 @@ function ResponsiveAppBar() {
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
+
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
-  };
+
 
   // const { user } = useAuthContext();
 
@@ -100,15 +104,17 @@ function ResponsiveAppBar() {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
+                {user && user.roles.includes("ROLES_ADMIN")&&( 
                   <Link className="navbar-brand2" to={`/${page.toLowerCase()}`}>
                     <Typography textAlign="center">{page}</Typography>
                   </Link>
+            )}
                 </MenuItem>
               ))}
             </Menu>
           </Box>
 
-          <Typography
+          <Typography 
             variant="h5"
             noWrap
             component="a"

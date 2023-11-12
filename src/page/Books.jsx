@@ -137,7 +137,9 @@ const Books = () => {
             display: "flex",
             flexDirection: "row",
             margin: "auto",
-            padding:"10px"
+            padding:"10px",
+            flexWrap:"wrap",
+            gap:"15px"
           }}
         >
           {books.map((book) => {

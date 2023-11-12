@@ -36,7 +36,7 @@ const theme = createTheme({
 export default function SignIn() {
   const [error, setError] = useState({});
   const navigate = useNavigate();
-  const {login} = userAuthContext();
+  // const {login} = userAuthContext();
   const [username, setUsername] = useState({
     username: "",
     password: "",
@@ -53,11 +53,11 @@ export default function SignIn() {
         username.username,
         username.password
       );
-      console.log(current);
-      login(current);
+      // console.log(current);
+      authService.login(current);
       navigate("/");
     } catch (error) {
-      setError(Validation(username));
+      setError(error);
     }
   };
   return (
