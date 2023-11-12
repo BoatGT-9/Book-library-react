@@ -147,11 +147,20 @@ function ResponsiveAppBar() {
             ))}
           </Box>
           <Stack>
+          {!user && (
             <Link to={"/login"}>
             <Button variant="text" sx={{ color: "#ffff" , size:"30px" }}>
               log in 
             </Button>
             </Link>
+          )}
+            {user && (
+            <Link to={"/logout"}>
+            <Button variant="text" sx={{ color: "#ffff" , size:"30px" }}>
+              log out
+            </Button>
+            </Link>
+            )}
           </Stack>
         </Toolbar>
       </Container>

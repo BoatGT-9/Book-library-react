@@ -7,6 +7,7 @@ import Layout from "./components/Layout";
 import  Edit  from "./page/Edit.jsx";
 import Login from "./page/Login.jsx";
 import Register from "./page/Register.jsx"
+import Logout  from "./page/logout.jsx";
 // import Card from "./components/Card";
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/edit/:bookId" element={<Edit/>}/>
           <Route path="/login" element={<Login/>}/>
           <Route path="/Register" element={<Register/>}/>
+          <Route path="/logout" element={<Logout/>}/>
         </Route>
       </Routes>
       

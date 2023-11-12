@@ -11,24 +11,18 @@ const config = {
 };
 
 const login = async (username, password) => {
-  try {
-  
-    const response = await axios.post(
+  const response = await axios.post(
       API_URL + "signin",
       { username, password },
       config
-    );
-    if (response.data.accessToken) {
-      // Sign IN SuccessFully
-      localStorage.setItem("user", JSON.stringify(response.data));
-      localStorage.setItem("token", JSON.stringify(response.data.accessToken));
-    }
-    return response.data;
-  } catch (error) {
-    console.error("Error during login:", error);
-    throw error;
-  }
-};
+  )
+      if(response.data.accessToken){
+          //signin success
+          localStorage.setItem("user", JSON.stringify(response.data))
+          localStorage.setItem("token", JSON.stringify(response.data.accessToken))
+      }
+      return response;
+}
 const logout = () => {
   localStorage.removeItem("user")
   localStorage.removeItem("token");

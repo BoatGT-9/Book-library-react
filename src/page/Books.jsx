@@ -82,7 +82,7 @@ const handleDelete = async (id) => {
     if (result.isConfirmed) {
       try {
         
-        await axios.delete(`${URL}/books/${id}`);
+        await axios.delete(`${URL}/books/${id}`,config);
 
         await Swal.fire("Deleted!", "Your file has been deleted.", "success");
         // สั่งรีโหลดหน้าของ page  เพื่อจะให้ useEfect ทำงานอีกครั้ง
