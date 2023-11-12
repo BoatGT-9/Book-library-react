@@ -11,24 +11,25 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 // import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import { Link,useNavigate  } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Stack } from "@mui/material";
 import useAuthContext from "../context/Authcontext"
 // import { useNavigate } from "react-router-dom";
 
 const pages = ["Add"];
 // const settings = ["Profile", "Logout"];
-const {user, logout} = useAuthContext;
-// const navigate = useNavigate();
-//   const handleLogout = () =>{
-//     logout();
-//     navigate("/login");
-//   }
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-
+  const {user, logout} = useAuthContext;
+  const navigate = useNavigate();
+    const handleLogout = () =>{
+      logout();
+      navigate("/login");
+  }
+  
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -155,7 +156,7 @@ function ResponsiveAppBar() {
             </Link>
           )}
             {user && (
-            <Link to={"/logout"}>
+            <Link to={"/logout"} onClick={handleLogout}>
             <Button variant="text" sx={{ color: "#ffff" , size:"30px" }}>
               log out
             </Button>

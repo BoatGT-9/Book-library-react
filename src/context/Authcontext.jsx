@@ -1,8 +1,9 @@
 import { useContext, createContext, useState, useEffect } from "react";
 import authService from "../service/auth.service";
+// import { get } from "http";
 const AuthContext = createContext(null);
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(getUser);
   const login = (user) => setUser(user);
   const logout = () => {
     authService.logout();

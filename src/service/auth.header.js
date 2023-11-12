@@ -1,5 +1,5 @@
-import { useAuthContext } from "../context/Auth.context";
-export  function authHeader() {
+// import { useAuthContext } from "../context/Auth.context";
+export default function authHeader() {
     // console.log(user);
     const  user  = JSON.parse(localStorage.getItem("user"));
     if (user && user.accessToken) {

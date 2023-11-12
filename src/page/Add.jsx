@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import authHeader from "../service/auth.header"
 
 // MUI framework
 import Button from "@mui/material/Button";
@@ -42,6 +43,7 @@ const config = {
     username: USERNAME,
     password: PASSWORD,
   },
+  headers:authHeader()
 };
 
 
