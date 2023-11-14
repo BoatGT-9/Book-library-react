@@ -2,19 +2,15 @@ import { useContext, createContext, useState } from "react";
 // import { json } from "react-router-dom";
 const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
-  // const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("user"));
   const token = JSON.parse(localStorage.getItem("token"));
   const [username, setusername] = useState(user ? user.username : "");
   const [Token,setToken] = useState( token? token:"")
   const [roles,setRoles] = useState( user? user.roles:"")
-  const [user,setuser] = useState(JSON.parse(localStorage.getItem("user")))
-  const logout = () => {
-    authService.logout();
-    setuser(null);
-  };
+  
 
   return (
-    <AuthContext.Provider value={{ user,setuser,username,setusername,Token,setToken,roles,setRoles,logout }}>
+    <AuthContext.Provider value={{ user,username,setusername,Token,setToken,roles,setRoles, }}>
       {children}
     </AuthContext.Provider>
   );

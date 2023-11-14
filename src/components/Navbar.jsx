@@ -15,11 +15,12 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Stack } from "@mui/material";
 import {auth} from "../context/Authcontext"
-// import authService from "../service/auth.service"
+import authService from "../service/auth.service"
 
 
 const pages = ["Add"];
 // const settings = ["Profile", "Logout"];
+// const {logout} = auth();
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -27,8 +28,9 @@ function ResponsiveAppBar() {
   const navigate = useNavigate();
     //logout
   const handleLogout = () =>{
-      logout();
+      authService.logout();
       navigate("/");
+      window.location.reload();
   }
   
   const handleOpenNavMenu = (event) => {
