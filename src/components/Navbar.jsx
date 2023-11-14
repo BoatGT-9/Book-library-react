@@ -24,7 +24,8 @@ function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate = useNavigate();
-    const handleLogout = () =>{
+    //logout
+  const handleLogout = () =>{
       logout();
       navigate("/login");
   }
@@ -158,7 +159,7 @@ function ResponsiveAppBar() {
             </Link>
            )} 
             {Token && (
-            <Link to={"/logout"} onClick={handleLogout}>
+            <Link to={"/"} onClick={handleLogout}>
             <Button variant="text" sx={{ color: "#ffff" , size:"30px" }}>
               log out
             </Button>
