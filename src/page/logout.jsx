@@ -10,7 +10,7 @@ const logout = () => {
   };
   setTimeout(() => {
     handleLogout();
-  }, 3 * 100);
+  },);
 
   return (
   <div> Logout</div>
