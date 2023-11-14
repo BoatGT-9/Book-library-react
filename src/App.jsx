@@ -11,7 +11,8 @@ import Logout from "./page/logout.jsx";
 import AdminRoute from "./page/AdminRouter.jsx";
 import { AuthProvider } from "./context/Authcontext.jsx";
 import ProtectedRoute from "./page/ProtectedRoute.jsx";
-// import Card from "./components/Card";
+import Profile from "./page/Profile.jsx"
+
 function App() {
   return (
     <>
@@ -31,11 +32,12 @@ function App() {
             <Route
               path="/edit/:bookId"
               element={
-                // <AdminRoute>
+                <AdminRoute>
                 <Edit />
-                // </AdminRoute>
+               </AdminRoute>
               }
             />
+            <Route path="/profile" element={<Profile/>} />
             <Route path="/login" element={<Login />} />
             <Route path="/Register" element={<Register />} />
             <Route path="/logout" element={<Logout />} />

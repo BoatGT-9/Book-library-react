@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditIcon from '@mui/icons-material/Edit';
 import { Link } from "react-router-dom";
+import {auth} from "../context/Authcontext"
 
 
 const ExpandMore = styled((props) => {
@@ -29,6 +30,9 @@ export default function RecipeReviewCard({ book, handleDelete, }) {
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+  const {user} = auth(); 
+
+
 
   return (
     <Card className="card-detail" sx={{ maxWidth: 220, maxHeight:550,
@@ -64,17 +68,21 @@ export default function RecipeReviewCard({ book, handleDelete, }) {
       <CardActions disableSpacing>
         {/* button group */}
         {/* button Update */}
+        {user && user.roles.includes("ROLES_ADMIN")&&(
         <Link to={`/edit/${book.id}`} >  
         <IconButton aria-label="Edit">
           <EditIcon />
         </IconButton>
         </Link>
+        )}
         {/* button Delete */}
-        <Link to="" onClick={() => { handleDelete(book.id);}}>
+        {user && user.roles.includes("ROLES_ADMIN")&&(
+          <Link to="" onClick={() => { handleDelete(book.id);}}>
           <IconButton aria-label="Delete" display="flex">
             <DeleteOutlineIcon />
           </IconButton>
         </Link>
+          )}
         {/* <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}

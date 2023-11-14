@@ -6,10 +6,10 @@ export const AuthProvider = ({ children }) => {
   const token = JSON.parse(localStorage.getItem("token"));
   const [username, setusername] = useState(user ? user.username : "");
   const [Token,setToken] = useState( token? token:"")
-  const [role,setRole] = useState( user? user.role:"")
+  const [roles,setRoles] = useState( user? user.roles:"")
 
   return (
-    <AuthContext.Provider value={{ username,setusername,Token,setToken,role,setRole }}>
+    <AuthContext.Provider value={{ user,username,setusername,Token,setToken,roles,setRoles }}>
       {children}
     </AuthContext.Provider>
   );

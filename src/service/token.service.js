@@ -5,14 +5,14 @@ const getLocalRefreshToken = () => {
   // ? เป้นการเข้าถึงหรือเป็นการถามว่ามีค่าไหม
   return user?.refreshToken;
 };
-const getLocalAcessToken = () => {
+const getLocalAccessToken = () => {
   const user = JSON.parse(localStorage.getItem("user"));
-  return user?.acessToken;
+  return user?.accessToken;
 };
 
 const SetLocalAccessToken = (token) => {
     const user = JSON.parse(localStorage.getItem("user"));
-    user.acessToken= token;
+    user.accessToken= token;
     localStorage.setItem("user",json.stringify(user));
     return 
   //     const accessToken = 'your_access_token_here';
@@ -31,7 +31,7 @@ const removeUser = ()=>{
 
 const TokenService = {
     getLocalRefreshToken,
-    getLocalAcessToken,
+    getLocalAccessToken,
     SetLocalAccessToken,
     getUser,
     setUser,

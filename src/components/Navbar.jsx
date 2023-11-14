@@ -40,8 +40,8 @@ function ResponsiveAppBar() {
 
 
 
-  const { username, Token } = auth();
-  console.log(username);
+  const { username, Token ,user,} = auth();
+  // console.log(username);
 
 
   return (
@@ -105,11 +105,11 @@ function ResponsiveAppBar() {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                {/* {user && user.roles.includes("ROLES_ADMIN")&&(  */}
+                {user && user.roles.includes("ROLES_ADMIN")&&( 
                   <Link className="navbar-brand2" to={`/${page.toLowerCase()}`}>
                     <Typography textAlign="center">{page}</Typography>
                   </Link>
-            {/* )} */}
+                )} 
                 </MenuItem>
               ))}
             </Menu>
@@ -141,9 +141,11 @@ function ResponsiveAppBar() {
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: "black", display: "block" }}
               >
+                {user && user.roles.includes("ROLES_ADMIN")&&( 
                 <Link className="navbar-brand" to={`/${page.toLowerCase()}`}>
                   <Typography textAlign="center">{page}</Typography>
                 </Link>
+                )}
               </Button>
             ))}
           </Box>

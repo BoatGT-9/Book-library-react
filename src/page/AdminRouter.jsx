@@ -1,10 +1,10 @@
 import { Navigate } from "react-router-dom";
-// import { useAuthContext } from "../context/Authcontext";
+import { auth } from "../context/Authcontext";
 
 const AdminRoute = ({children}) =>{
-    const {user} = useAuthContext();
+    const {user} = auth();
     if(!user){
-        return <Navigate to="/signin"/>
+        return <Navigate to="/login"/>
     }
     if( !user.roles.includes("ROLES_ADMIN")) return <Navigate to={"/notAllow"}/>
     return children

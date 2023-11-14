@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import authHeader from "../service/auth.header"
 
 // MUI framework
 import Button from "@mui/material/Button";
@@ -27,6 +28,7 @@ const config = {
     username: USERNAME,
     password: PASSWORD,
   },
+  headers:authHeader()
 };
 
 const theme = createTheme({
@@ -93,7 +95,7 @@ export default function Edit() {
   useEffect(() => {
     const fetchAllBooks = async () => {
       try {
-        const res = await axios.get(`/books/${bookId}`);
+        const res = await axios.get(`${URL}/books/${bookId}`,config);
         // console.log(res);
         setBooks(res.data.Books);
         // console.log(res.data.BookList);
@@ -108,7 +110,7 @@ export default function Edit() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`/books/${bookId}`, books,config);
+      await axios.put(`${URL}/books/${bookId}`, books,config);
       navigate("/");
     } catch (error) {
       console.error(error);

@@ -8,16 +8,3 @@ export default function authHeader() {
         return {};
     }
 }
-
-// import { useAuthContext } from "../context/Auth.context";
-
-// export default function authHeader() {
-//     // Assuming useAuthContext returns an object with a 'user' property
-//     const { user } = useAuthContext();
-
-//     if (user && user.accessToken) {
-//         return {"x-access-token": user.accessToken};
-//     } else {
-//         return {};
-//     }
-// }

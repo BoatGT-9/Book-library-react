@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Card from "../components/Card";
 import Swal from "sweetalert2";
+import Card from "../components/Card";
+import authHeader from "../service/auth.header"
 
 // MUI framework
 import { styled, alpha, ThemeProvider } from "@mui/material/styles";
@@ -19,6 +20,7 @@ const config = {
     username: USERNAME,
     password: PASSWORD,
   },
+  headers:authHeader()
 };
 
 
@@ -69,94 +71,35 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-// const handleDelete = async (id) => {
-//   Swal.fire({
-//     title: "Are you sure?",
-//     text: "You won't be able to revert this!",
-//     icon: "warning",
-//     showCancelButton: true,
-//     confirmButtonColor: "#3085d6",
-//     cancelButtonColor: "#d33",
-//     confirmButtonText: "Yes, delete it!",
-//   }).then(async (result) => {
-//     if (result.isConfirmed) {
-//       try {
-        
-//         await axios.delete(`${URL}/books/${id}`,config);
-
-//         await Swal.fire("Deleted!", "Your file has been deleted.", "success");
-//         // สั่งรีโหลดหน้าของ page  เพื่อจะให้ useEfect ทำงานอีกครั้ง
-//         window.location.reload();
-//       } catch (error) {
-//         console.error(error);
-//       }
-//     }
-//   });
-// };
-
-// const handleDelete = async (id) => {
-//   Swal.fire({
-//     title: 'Are you sure?',
-//     text: "You won't be able to revert this!",
-//     icon: 'warning',
-//     showCancelButton: true,
-//     confirmButtonColor: '#3085d6',
-//     cancelButtonColor: '#d33',
-//     confirmButtonText: 'Yes, delete it!'
-//   }).then( async(result) => {
-//     if (result.isConfirmed) {
-//       try {
-//         await axios.delete(`${URL}/books/${id}`,config);
-
-//         await Swal.fire(
-//           'Deleted!',
-//           'Your file has been deleted.',
-//           'success'
-//           )
-//           // สั่งรีโหลดหน้าของ page  เพื่อจะให้ useEfect ทำงานอีกครั้ง 
-//           window.location.reload();
-//         } catch (error) {
-//           console.error(error);
-//         }
-//       }
-//     })
-// };
 const handleDelete = async (id) => {
-  try {
-    const result = await Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
-    });
-
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!",
+  }).then(async (result) => {
     if (result.isConfirmed) {
-      await axios.delete(`${URL}/books/${id}`, config);
+      try {
+        
+        await axios.delete(`${URL}/books/${id}`,config);
 
-      await Swal.fire(
-        'Deleted!',
-        'Your file has been deleted.',
-        'success'
-      );
-
-      // อัพเดทสถานะหรือ UI โดยตรง แทนการรีโหลดหน้า
-      // เช่น อัพเดทข้อมูลที่แสดงในหน้า
-      // updateData();
+        await Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        // สั่งรีโหลดหน้าของ page  เพื่อจะให้ useEfect ทำงานอีกครั้ง
+        window.location.reload();
+      } catch (error) {
+        console.error(error);
+      }
     }
-  } catch (error) {
-    console.error(error);
-
-    // จัดการข้อผิดพลาด แสดงข้อความผิดพลาดหรือดำเนินการตามกรณี
-    // เช่น Swal.fire('Error', 'An error occurred.', 'error');
-  }
+  });
 };
 
 
 const Books = () => {
   const [books, setBooks] = useState([]);
+  const [searchText, setSearchText] = useState("");
   // const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const fetchAllRes = async () => {
@@ -173,6 +116,7 @@ const Books = () => {
     fetchAllRes(books);
   }, []);
   console.log(books);
+  // console.log(searchText);
   return (
     <div>
       <h1 style={{marginTop:"90px"}}>Welcome to LibraryBook</h1>
@@ -184,6 +128,10 @@ const Books = () => {
           <StyledInputBase
             placeholder="Search…"
             inputProps={{ "aria-label": "search" }}
+            value={searchText}
+             onChange={(event) => {
+            setSearchText(event.target.value);
+          }}
           />
         </Search>
       </div>
@@ -204,15 +152,15 @@ const Books = () => {
             gap:"15px"
           }}
         >
-          {books.map((book) => {
+          {books
+          .filter((book) => {
+            return book.name.toLowerCase().includes(searchText.toLowerCase());
+            // return book.name.toLowerCase(searchText.toLowerCase());
+          })
+          .map((book) => {
             // return <div>{book.id}</div>
             return <Card handleDelete={handleDelete} book={book} key={book.id} />;
           })}
-           {/* <div className="">
-            {books.map((book) => {
-              return <Card book={book} key={book.id} />;
-            })} 
-      </div> */}
       </Stack>
        </Box>
       {/* ):(<Loading animation={Loading}/>)} */}
