@@ -159,11 +159,11 @@ function ResponsiveAppBar() {
             </Link>
            )} 
             {Token && (
-            <Link to={"/"} onClick={handleLogout}>
-            <Button variant="text" sx={{ color: "#ffff" , size:"30px" }}>
+            // <Link to={"/"} onClick={handleLogout}>
+            <Button  onClick={handleLogout} variant="text" sx={{ color: "#ffff" , size:"30px" }}>
               log out
             </Button>
-            </Link>
+            // </Link>
              )} 
           </Stack>
         </Toolbar>
