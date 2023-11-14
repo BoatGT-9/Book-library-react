@@ -54,7 +54,8 @@ export default function SignIn() {
         username.password
       );
       // console.log(current);
-      authService.login(current);
+      // authService.login(current);
+      
       navigate("/");
     } catch (error) {
       setError(error);

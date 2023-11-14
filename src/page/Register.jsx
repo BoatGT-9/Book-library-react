@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {Link , useNavigate } from 'react-router-dom';
 import authService from '../service/auth.service';
 
@@ -39,11 +39,10 @@ const SignUp = () => {
   const [username, setusername] = useState({
     username: "",
     email: "",
-    password: "",
-    
+    password: ""
   });
   const [errors, setError] = useState({});
-  
+  const [errormessage, Seterrormessage] = useState({ message: "" });
   const Input = (event) => {
     setusername((Prev) => ({
       ...Prev,
@@ -54,13 +53,15 @@ const SignUp = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      // console.log(username.password)
-      if (username.Confirm_password === username.Password) {
+      if (username.password === username.password) {
         const register = await authService.register(
-          username.username,
-          username.email,
-          username.password
+          // ทำเป็น string นะ แปลงจาก array 
+          username.username[0],
+          username.email[0],
+          username.password[0]
         );
+
+        navigate("/login");
       } else {
         setError(ture), 
         Seterrormessage({ message: "มันซ้ำกันอะ" });
@@ -68,7 +69,7 @@ const SignUp = () => {
     } catch (error) {
       console.log(error);
       setError(error);
-      
+      // Seterrormessage(error.response.data);
     }
   };
 

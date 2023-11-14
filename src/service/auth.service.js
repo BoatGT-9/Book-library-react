@@ -3,6 +3,7 @@ const URL = import.meta.env.VITE_BASE_URL;
 const API_URL = URL + "/api/auth/";
 const USERNAME = import.meta.env.VITE_BASE_USERNAME;
 const PASSWORD = import.meta.env.VITE_BASE_PASSWORD;
+
 const config = {
   auth: {
     username: USERNAME,
@@ -11,6 +12,7 @@ const config = {
 };
 
 const login = async (username, password) => {
+  console.log(username, password);
   const response = await axios.post(
       API_URL + "signin",
       { username, password },
@@ -28,7 +30,7 @@ const logout = () => {
   localStorage.removeItem("token");
 };
 const register = async (username, email, password) => {
-    console.log(username,email,password);
+    console.log(username[0],email[0],password[0]);
   return await axios.post(
     API_URL + "signup",
     { username:username, email:email, password:password },

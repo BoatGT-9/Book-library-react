@@ -1,14 +1,13 @@
 import { Navigate } from "react-router-dom";
-import { useAuthContext } from "../context/Authcontext";
-import notallow from "./notallow";
+// import { useAuthContext } from "../context/Authcontext";
 
 const AdminRoute = ({children}) =>{
     const {user} = useAuthContext();
-    if (!user) {
-        return <Navigate to="/Register"/>
+    if(!user){
+        return <Navigate to="/signin"/>
     }
-    if (!user.roles.includes("ROLES_ADMIN"))
-    return <Navigate to="/notallow"/>
+    if( !user.roles.includes("ROLES_ADMIN")) return <Navigate to={"/notAllow"}/>
     return children
 }
+
 export default AdminRoute;

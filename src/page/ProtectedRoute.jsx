@@ -1,11 +1,8 @@
-import { Navigate } from "react-router-dom";
-import { useAuthContext } from "../context/auth.context";
+import {auth} from "../context/Authcontext";
 
 const ProtectedRoute = ({children}) =>{
-    const {user} = useAuthContext();
-    if (!user) {
-        return <Navigate to="/Register"/>
-    }
+    const {role,Token} = auth ();
+    console.log(role,Token);
     return children
 }
 export default ProtectedRoute;

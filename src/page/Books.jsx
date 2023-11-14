@@ -69,30 +69,92 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const handleDelete = async (id) => {
-  Swal.fire({
-    title: "Are you sure?",
-    text: "You won't be able to revert this!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Yes, delete it!",
-  }).then(async (result) => {
-    if (result.isConfirmed) {
-      try {
+// const handleDelete = async (id) => {
+//   Swal.fire({
+//     title: "Are you sure?",
+//     text: "You won't be able to revert this!",
+//     icon: "warning",
+//     showCancelButton: true,
+//     confirmButtonColor: "#3085d6",
+//     cancelButtonColor: "#d33",
+//     confirmButtonText: "Yes, delete it!",
+//   }).then(async (result) => {
+//     if (result.isConfirmed) {
+//       try {
         
-        await axios.delete(`${URL}/books/${id}`,config);
+//         await axios.delete(`${URL}/books/${id}`,config);
 
-        await Swal.fire("Deleted!", "Your file has been deleted.", "success");
-        // สั่งรีโหลดหน้าของ page  เพื่อจะให้ useEfect ทำงานอีกครั้ง
-        window.location.reload();
-      } catch (error) {
-        console.error(error);
-      }
+//         await Swal.fire("Deleted!", "Your file has been deleted.", "success");
+//         // สั่งรีโหลดหน้าของ page  เพื่อจะให้ useEfect ทำงานอีกครั้ง
+//         window.location.reload();
+//       } catch (error) {
+//         console.error(error);
+//       }
+//     }
+//   });
+// };
+
+// const handleDelete = async (id) => {
+//   Swal.fire({
+//     title: 'Are you sure?',
+//     text: "You won't be able to revert this!",
+//     icon: 'warning',
+//     showCancelButton: true,
+//     confirmButtonColor: '#3085d6',
+//     cancelButtonColor: '#d33',
+//     confirmButtonText: 'Yes, delete it!'
+//   }).then( async(result) => {
+//     if (result.isConfirmed) {
+//       try {
+//         await axios.delete(`${URL}/books/${id}`,config);
+
+//         await Swal.fire(
+//           'Deleted!',
+//           'Your file has been deleted.',
+//           'success'
+//           )
+//           // สั่งรีโหลดหน้าของ page  เพื่อจะให้ useEfect ทำงานอีกครั้ง 
+//           window.location.reload();
+//         } catch (error) {
+//           console.error(error);
+//         }
+//       }
+//     })
+// };
+const handleDelete = async (id) => {
+  try {
+    const result = await Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    });
+
+    if (result.isConfirmed) {
+      await axios.delete(`${URL}/books/${id}`, config);
+
+      await Swal.fire(
+        'Deleted!',
+        'Your file has been deleted.',
+        'success'
+      );
+
+      // อัพเดทสถานะหรือ UI โดยตรง แทนการรีโหลดหน้า
+      // เช่น อัพเดทข้อมูลที่แสดงในหน้า
+      // updateData();
     }
-  });
+  } catch (error) {
+    console.error(error);
+
+    // จัดการข้อผิดพลาด แสดงข้อความผิดพลาดหรือดำเนินการตามกรณี
+    // เช่น Swal.fire('Error', 'An error occurred.', 'error');
+  }
 };
+
+
 const Books = () => {
   const [books, setBooks] = useState([]);
   // const [isLoading, setIsLoading] = useState(true);

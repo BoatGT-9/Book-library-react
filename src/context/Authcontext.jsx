@@ -1,31 +1,24 @@
-import { useContext, createContext, useState, useEffect } from "react";
-import authService from "../service/auth.service";
-// import { get } from "http";
-const AuthContext = createContext(null);
+import { useContext, createContext, useState } from "react";
+// import { json } from "react-router-dom";
+const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(getUser);
-  const login = (user) => setUser(user);
-  const logout = () => {
-    authService.logout();
-    setUser(null);
-  };
-  function getUser() {
-    const temp = localStorage.getItem("user");
-    const savedUser = JSON.parse(temp);
-    return savedUser || null;
-  }
-  useEffect(() => {
-    const temp = JSON.stringify(user);
-    localStorage.setItem("user", temp);
-      // console.log(temp);
-  }, [user]);
-  
+  const user = JSON.parse(localStorage.getItem("user"));
+  const token = JSON.parse(localStorage.getItem("token"));
+  const [username, setusername] = useState(user ? user.username : "");
+  const [Token,setToken] = useState( token? token:"")
+  const [role,setRole] = useState( user? user.role:"")
+
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ username,setusername,Token,setToken,role,setRole }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-export const useAuthContext = () => useContext(AuthContext);
-export default AuthContext;
+export const auth = ()=>{
+  const context = useContext(AuthContext);
+  if(!context){
+    throw new Error("ไม่มี provider นะ ");
+  }
+  return context;
+}

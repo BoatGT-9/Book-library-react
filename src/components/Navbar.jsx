@@ -14,7 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Stack } from "@mui/material";
-import useAuthContext from "../context/Authcontext"
+import {auth} from "../context/Authcontext"
 // import { useNavigate } from "react-router-dom";
 
 const pages = ["Add"];
@@ -23,7 +23,6 @@ const pages = ["Add"];
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const {user, logout} = useAuthContext;
   const navigate = useNavigate();
     const handleLogout = () =>{
       logout();
@@ -41,7 +40,8 @@ function ResponsiveAppBar() {
 
 
 
-  // const { user } = useAuthContext();
+  const { username, Token } = auth();
+  console.log(username);
 
 
   return (
@@ -105,11 +105,11 @@ function ResponsiveAppBar() {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                {user && user.roles.includes("ROLES_ADMIN")&&( 
+                {/* {user && user.roles.includes("ROLES_ADMIN")&&(  */}
                   <Link className="navbar-brand2" to={`/${page.toLowerCase()}`}>
                     <Typography textAlign="center">{page}</Typography>
                   </Link>
-            )}
+            {/* )} */}
                 </MenuItem>
               ))}
             </Menu>
@@ -148,20 +148,20 @@ function ResponsiveAppBar() {
             ))}
           </Box>
           <Stack>
-          {!user && (
+          {!Token && ( 
             <Link to={"/login"}>
             <Button variant="text" sx={{ color: "#ffff" , size:"30px" }}>
               log in 
             </Button>
             </Link>
-          )}
-            {user && (
+           )} 
+            {Token && (
             <Link to={"/logout"} onClick={handleLogout}>
             <Button variant="text" sx={{ color: "#ffff" , size:"30px" }}>
               log out
             </Button>
             </Link>
-            )}
+             )} 
           </Stack>
         </Toolbar>
       </Container>
