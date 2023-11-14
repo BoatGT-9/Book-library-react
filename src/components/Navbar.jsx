@@ -15,7 +15,8 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Stack } from "@mui/material";
 import {auth} from "../context/Authcontext"
-// import { useNavigate } from "react-router-dom";
+// import authService from "../service/auth.service"
+
 
 const pages = ["Add"];
 // const settings = ["Profile", "Logout"];
@@ -27,7 +28,7 @@ function ResponsiveAppBar() {
     //logout
   const handleLogout = () =>{
       logout();
-      navigate("/login");
+      navigate("/");
   }
   
   const handleOpenNavMenu = (event) => {

@@ -55,8 +55,8 @@ export default function SignIn() {
       );
       // console.log(current);
       // authService.login(current);
-      // window.location.reload();
       navigate("/");
+      window.location.reload();
     } catch (error) {
       setError(error);
     }
