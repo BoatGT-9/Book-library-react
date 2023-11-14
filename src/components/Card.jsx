@@ -7,11 +7,12 @@ import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
+import Collapse from "@mui/material/Collapse";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import EditIcon from '@mui/icons-material/Edit';
+import EditIcon from "@mui/icons-material/Edit";
 import { Link } from "react-router-dom";
-import {auth} from "../context/Authcontext"
-
+import { auth } from "../context/Authcontext";
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -24,66 +25,81 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function RecipeReviewCard({ book, handleDelete, }) {
-  const [expanded, setExpanded,] = React.useState(false);
-  // console.log(`/edit/${book.id}`); 
+export default function RecipeReviewCard({ book, handleDelete }) {
+  const [expanded, setExpanded] = React.useState(false);
+  // console.log(`/edit/${book.id}`);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-  const {user} = auth(); 
-
-
+  const { user } = auth();
 
   return (
-    <Card className="card-detail" sx={{ maxWidth: 220, maxHeight:550,
-    }}>
-      <CardMedia 
+    <Card className="card-detail" sx={{ maxWidth: 220, maxHeight: 650 }}>
+      <CardMedia
         className="img-container"
         component="img"
         height="300"
         width="100"
         // background-color=" rgb(255, 0, 0)"
-        border= "2px solid rgb(0, 128, 0)"
+        border="2px solid rgb(0, 128, 0)"
         image={book.image}
         alt="book image"
       />
       <div className="card-details">
-      <div style={{Size:"23px"}}>
-      <CardHeader
-        // title="Shrimp and Chorizo Paella"
-        title={book.name}
-        />
+        <div style={{ Size: "15px" }}>
+          <CardHeader
+            style={{
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+            // title="Shrimp and Chorizo Paella"
+            title={book.name}
+          />
         </div>
-      <CardContent>
-        <Typography variant="body2" color="text.secondary">
-          ประเภท : {book.type}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          ผู้เขียน : {book.publisher}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <CardContent>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            style={{
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+            }}
+          >
+            ประเภท : {book.type}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            ผู้เขียน : {book.publisher}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
             {/* title : {book.title} */}
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        {/* button group */}
-        {/* button Update */}
-        {user && user.roles.includes("ROLES_ADMIN")&&(
-        <Link to={`/edit/${book.id}`} >  
-        <IconButton aria-label="Edit">
-          <EditIcon />
-        </IconButton>
-        </Link>
-        )}
-        {/* button Delete */}
-        {user && user.roles.includes("ROLES_ADMIN")&&(
-          <Link to="" onClick={() => { handleDelete(book.id);}}>
-          <IconButton aria-label="Delete" display="flex">
-            <DeleteOutlineIcon />
-          </IconButton>
-        </Link>
+          </Typography>
+        </CardContent>
+        <CardActions disableSpacing>
+          {/* button group */}
+          {/* button Update */}
+          {user && user.roles.includes("ROLES_ADMIN") && (
+            <Link to={`/edit/${book.id}`}>
+              <IconButton aria-label="Edit">
+                <EditIcon />
+              </IconButton>
+            </Link>
           )}
-        {/* <ExpandMore
+          {/* button Delete */}
+          {user && user.roles.includes("ROLES_ADMIN") && (
+            <Link
+              to=""
+              onClick={() => {
+                handleDelete(book.id);
+              }}
+            >
+              <IconButton aria-label="Delete" display="flex">
+                <DeleteOutlineIcon />
+              </IconButton>
+            </Link>
+          )}
+          {/* <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}
           aria-expanded={expanded}
@@ -91,14 +107,14 @@ export default function RecipeReviewCard({ book, handleDelete, }) {
           >
           <ExpandMoreIcon />
         </ExpandMore> */}
-      </CardActions>
-      {/* <Collapse in={expanded} timeout="auto" unmountOnExit>
+        </CardActions>
+        {/* <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
           <Typography paragraph>Title:</Typography>
           <Typography paragraph>{book.title}.</Typography>
         </CardContent>
       </Collapse> */}
-          </div>
+      </div>
     </Card>
   );
 }

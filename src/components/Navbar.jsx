@@ -153,7 +153,14 @@ function ResponsiveAppBar() {
               </Button>
             ))}
           </Box>
-          <Stack>
+          <Stack direction="row">
+            {Token && ( 
+              <Link to={"/Profile"}>
+            <Button variant="text" sx={{ color: "#ffff" , size:"30px" }} >
+              ProFile
+            </Button>
+            </Link>
+            )}
           {!Token && ( 
             <Link to={"/login"}>
             <Button variant="text" sx={{ color: "#ffff" , size:"30px" }}>

@@ -96,3 +96,40 @@ h1{
   line-height:25px;
   font-size:1.1em;
 }
+
+.card-detail-profile{
+    display: block;
+    top: 0px;
+    left: 24%;
+    position: relative;
+    max-width: 1000px;
+    background-color: #f2f8f9;
+    border-radius: 4px;
+    padding: 32px 24px;
+    margin: 12px;
+    text-decoration: none;
+    z-index: 0;
+    overflow: hidden;
+    border: 1px solid #f2f8f9;
+    justify-Content:"center";
+    text-align: center;
+    margin-top: 5cm;
+
+
+    
+
+  
+    &:hover {
+      transition: all 0.2s ease-out;
+      box-shadow: 0px 4px 8px rgba(38, 38, 38, 0.2);
+      top: -4px;
+      border: 1px solid #cccccc;
+      background-color: white;
+    }
+  
+    
+  
+    &:hover:before {
+      transform: scale(2.15);
+    } 
+}
