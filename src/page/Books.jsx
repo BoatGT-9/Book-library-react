@@ -3,7 +3,8 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import Card from "../components/Card";
 import authHeader from "../service/auth.header"
-
+import Loading from "../components/loading";
+import * as loadingData from "../load/Animation - 1699994250061.json";
 // MUI framework
 import { styled, alpha, ThemeProvider } from "@mui/material/styles";
 import SearchIcon from "@mui/icons-material/Search";
@@ -22,6 +23,13 @@ const config = {
   },
   headers:authHeader()
 };
+
+
+
+
+
+
+
 
 
 const theme = createTheme();
@@ -97,17 +105,22 @@ const handleDelete = async (id) => {
 };
 
 
+
 const Books = () => {
   const [books, setBooks] = useState([]);
   const [searchText, setSearchText] = useState("");
-  // const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  // const [bookId,setbookId] = useState(null)
+  // const [progress, setProgress] = React.useState(false);
+  // const [book , setBook] = useState([]);
+  
   useEffect(() => {
     const fetchAllRes = async () => {
       try {
         // console.log(data)
         const res = await axios.get(`${URL}/books`,config);
         setBooks(res.data.BookList);
-        // setIsLoading(false);
+        setIsLoading(false);
         // console.log(res.data, booklist);
       } catch (err) {
         console.log(err);
@@ -116,10 +129,19 @@ const Books = () => {
     fetchAllRes(books);
   }, []);
   console.log(books);
+
+
+
+  const handleClick = async () => {
+   
+  };
+  
   // console.log(searchText);
   return (
     <div>
-      <h1 style={{marginTop:"90px"}}>Welcome to LibraryBook</h1>
+      {/* <CircularProgressWithLabel value={progress} />; */}
+      <h1 style={{marginTop:"90px"}}>Welcome to LibraryBooks</h1>
+      <img/>
       <div className="search-bar">
         <Search>
           <SearchIconWrapper>
@@ -135,7 +157,7 @@ const Books = () => {
           />
         </Search>
       </div>
-      {/* {!isLoading?( */}
+      {!isLoading?(
       <Box xs={12} sm={6} md={4}>
         <Stack
           xs={12}
@@ -159,11 +181,11 @@ const Books = () => {
           })
           .map((book) => {
             // return <div>{book.id}</div>
-            return <Card handleDelete={handleDelete} book={book} key={book.id} />;
+            return <Card handleClick={handleClick} handleDelete={handleDelete} book={book} key={book.id} />;
           })}
       </Stack>
        </Box>
-      {/* ):(<Loading animation={Loading}/>)} */}
+       ):(<Loading animation={loadingData}/>)} 
       
         
    

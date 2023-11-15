@@ -1,5 +1,7 @@
 import * as React from "react";
+import { useEffect } from "react";
 import { styled } from "@mui/material/styles";
+import Swal from "sweetalert2";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
@@ -13,6 +15,22 @@ import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import EditIcon from "@mui/icons-material/Edit";
 import { Link } from "react-router-dom";
 import { auth } from "../context/Authcontext";
+import PreviewIcon from '@mui/icons-material/Preview';
+import authHeader from "../service/auth.header";
+
+import axios from "axios";
+
+const URL = import.meta.env.VITE_BASE_URL;
+const USERNAME = import.meta.env.VITE_BASE_USERNAME;
+const PASSWORD = import.meta.env.VITE_BASE_PASSWORD;
+const config = {
+  auth: {
+    username: USERNAME,
+    password: PASSWORD,
+  },
+  headers:authHeader()
+};
+
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -27,11 +45,55 @@ const ExpandMore = styled((props) => {
 
 export default function RecipeReviewCard({ book, handleDelete }) {
   const [expanded, setExpanded] = React.useState(false);
+  const [books,setbooks] =React.useState()
   // console.log(`/edit/${book.id}`);
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
   const { user } = auth();
+
+  useEffect(() => {
+    const fetchIdbook = async (bookId) => {
+      try {
+        // console.log(data)
+        const res = await axios.get(`${URL}/books/${bookId}`,config);
+        setbooks(res.data.BookList);
+        // setIsLoading(false);
+        // console.log(res.data, booklist);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchIdbook(book);
+  }, []);
+  // console.log(book);
+
+
+  const handelClick =()=>{
+    Swal.fire({
+      title: [book.name],
+      text: [book.title],
+      imageUrl: [book.image],
+      imageWidth: "250px",
+      imageHeight: "300px",
+      imageAlt: "book image",
+      
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+            
+    
+            
+            // สั่งรีโหลดหน้าของ page  เพื่อจะให้ useEfect ทำงานอีกครั้ง
+            // window.location.reload();  
+          } catch (error) {
+            console.error(error);
+          }
+        }
+      });
+    }
+    console.log(book);
+
 
   return (
     <Card className="card-detail" sx={{ maxWidth: 220, maxHeight: 650 }}>
@@ -69,11 +131,19 @@ export default function RecipeReviewCard({ book, handleDelete }) {
           >
             ประเภท : {book.type}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="body2" color="text.secondary" style={{ 
+            whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+}}>
             ผู้เขียน : {book.publisher}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {/* title : {book.title} */}
+          <Typography variant="body2" color="text.secondary" style={{ 
+            whiteSpace: "nowrap",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+}}>
+            title : {book.title}
           </Typography>
         </CardContent>
         <CardActions disableSpacing>
@@ -99,6 +169,18 @@ export default function RecipeReviewCard({ book, handleDelete }) {
               </IconButton>
             </Link>
           )}
+            <Link
+              to=""
+              onClick={() => {
+                handelClick(book.id)
+              }}
+            >
+              <IconButton aria-label="Delete" display="flex">
+              <PreviewIcon/>
+              </IconButton>
+            </Link>
+
+
           {/* <ExpandMore
           expand={expanded}
           onClick={handleExpandClick}
