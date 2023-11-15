@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import CloseIcon from '@mui/icons-material/Close';
 import Button from "@mui/material/Button";
 import { createTheme,ThemeProvider } from '@mui/material/styles';
-
+import Container from '@mui/material/Container';
 
 const theme = createTheme({
   palette: {
@@ -39,6 +39,7 @@ const Profile = () => {
 
   return (
     <ThemeProvider theme={theme}>
+      <Container component="main" >
 
     <div>
       <link
@@ -81,6 +82,7 @@ const Profile = () => {
         
       </div>
     </div>
+          </Container>
                </ThemeProvider>
   );
 };
